@@ -1,0 +1,21 @@
+/*Imagen en columna de tabla*/
+.profile{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.avatar{
+     width:100px;
+    height:100px;
+    border-radius:50px;
+}
+
+.box-image img{
+  width:60px;
+  height: 60px;
+}
+
+.box-image img.profile{
+  object-fit: cover;
+}

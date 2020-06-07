@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="MyApp" packages="">
+  
+  <Properties>
+    <!--Directorio-->
+    <Property name="path">/home/fcastillo/payara5/logs/jsf</Property>
+  </Properties>
+  
+  <Appenders>
+    <!--Salida por consola-->
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <!--nivel fecha hora nombreclase (archivo:metodo:linea) - mensaje-->
+      <PatternLayout pattern="%highlight{%p %d [%C{-4}] (%F:%M:%L) - %m%n}"/>
+    </Console>
+  </Appenders>
+  
+  <Loggers>
+    <Root level="debug">
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+  </Loggers>
+</Configuration>

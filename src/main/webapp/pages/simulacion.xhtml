@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../plantilla/plantilla.xhtml">
+
+      <ui:define name="content">
+        <h2>Simulador de Préstamos</h2>
+        <div class="ui-g">
+          <div class="ui-g-6 ui-lg-6">
+            <p:fieldset legend="Datos" toggleSpeed="500" toggleable="true">
+              <h:form id="frmPrincipal">
+                <h:panelGrid columns="2" cellpadding="5">
+                  <p:outputLabel value="T.N.A.: "/>
+                  <p:inputNumber value="#{simuladorController.tna}" symbol="%" symbolPosition="s" emptyValue="always"/>  
+                  <p:outputLabel value="G. de otorgamiento: "/>
+                  <p:inputNumber value="#{simuladorController.gastosOtorgamiento}" symbol="%" symbolPosition="s" emptyValue="always"/>  
+                  <p:outputLabel value="Seguro de vida: "/>
+                  <p:inputNumber value="#{simuladorController.seguroVida}" symbol="%" symbolPosition="s" emptyValue="always"/>  
+                  <p:outputLabel value="I.V.A.: "/>
+                  <p:inputNumber value="#{simuladorController.iva}" symbol="%" symbolPosition="s" emptyValue="always"/>  
+                  <p:outputLabel value="Dinero solicitado: "/>
+                  <p:inputNumber value="#{simuladorController.montoSolicitado}" symbol="$" decimalSeparator=","/>
+                  <p:outputLabel value="Cuotas: "/>
+                  <p:spinner  value="#{simuladorController.plazo}"  min="1" max="100" />
+                  <p:outputLabel value="1° Pago:"/>
+                  <p:calendar  value="#{simuladorController.fechaPrimerPago}" locale="es" 
+                               showOn="button" beforeShowDay="sundayDisabled"
+                               pattern="dd/MM/yyyy" mask="true" 
+                               widgetVar="calendario"/>
+                  <p:commandButton id="btnSimular" value="Calcular" action="#{simuladorController.procesar()}"
+                                   update=":frmResultados, :frmInformacion:mensajes"/>
+                  <p:commandButton id="btnLimpiar" value="Limpiar" actionListener="#{simuladorController.limpiarCampos()}"
+                                   update=":frmResultados, :frmPrincipal"/>
+
+                </h:panelGrid>
+              </h:form>
+            </p:fieldset>
+
+          </div>
+
+          <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <h:form id="frmInformacion">
+              <p:messages id="mensajes" showDetail="true" closable="true"/>
+            </h:form>
+          </div>
+
+        </div>
+
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <h:form id="frmResultados">
+              <p:dataTable id="tblResultado" 
+                           value="#{simuladorController.lstFrances}"
+                           var="r"
+                           selectionMode="single"
+                           rowKey="#{r.plazo}"
+                           emptyMessage="No hay registros"
+                           paginator="true"
+                           rows="5"
+                           paginatorPosition="bottom"
+                           reflow="true"
+                           rendered="#{simuladorController.lstFrances.size() > 0}"
+                           >
+                <f:facet name="header">
+                  Tabla de amortización
+                </f:facet>
+                <p:column headerText="N° Cuota." class="text-center">
+                  <h:outputText value="#{r.plazo}"/>
+                </p:column>
+                <p:column headerText="Saldos" class="text-right">
+                  <h:outputText value="#{r.saldoDeuda}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Interés" class="text-right">
+                  <h:outputText value="#{r.interes}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Capital" class="text-right">
+                  <h:outputText value="#{r.amortizacion}" >
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Cuota pura" class="text-right">
+                  <h:outputText value="#{r.cuotaPura}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Total Amortizado" class="text-right">
+                  <h:outputText value="#{r.totalAmortizado}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="I.V.A. S/ Interés" class="text-right">
+                  <h:outputText value="#{r.iva}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Seguro de vida" class="text-right">
+                  <h:outputText value="#{r.seguroDeVida}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Total Cuota" class="text-right">
+                  <h:outputText value="#{r.cuotaTotal}">
+                    <f:convertNumber currencySymbol = "$" type = "currency" />
+                  </h:outputText>
+                </p:column>
+
+
+                <p:column headerText="F. de Vencimiento" class="text-right">
+                  <h:outputText value="#{r.fechaSolicitud}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                  </h:outputText>
+                </p:column>
+                <f:facet name="footer">
+                  <p:commandButton value="Imprimir" icon="pi pi-print"/>
+
+                  <p:commandButton id="btnOtorgar" value="Otorgar" icon="pi pi-check"
+                                   onclick="PF('dialogOtorgar').show();"/>
+                  <p:fragment>
+                  <p:commandButton id="btnGraficar" 
+                                   value="Graficar" icon="pi pi-print"
+                                   actionListener="#{simuladorController.crearBarModelFrances()}"
+                                   update=":chart"
+                                   oncomplete="PF('dialogChart').show();"
+                                   />
+                  </p:fragment>
+                </f:facet>
+              </p:dataTable>
+              <p:blockUI block="frmPrincipal" trigger=":frmPrincipal:btnSimular">
+                <h:graphicImage library="images" name="ajaxLoader.gif" style="margin-right:12px; vertical-align:middle;"/>
+                <h:outputText value="Procesando..." style="white-space:nowrap;"/>
+              </p:blockUI> 
+
+              <p:dialog header="Otorgar préstamo" widgetVar="dialogOtorgar" modal="true" height="100" closeOnEscape="true">
+                <h:panelGrid columns="2" cellpadding="5">
+                  <p:outputLabel value="Cliente"/>
+                  <p:autoComplete  id="txtCliente" scrollHeight="200" dropdown="true"
+                                   value="#{simuladorController.cliente}" 
+                                   completeMethod="#{clienteDataController.findByNameLike}"
+                                   var="c" 
+                                   itemLabel="#{c.id.apellidoNombre} #{c.id.ndocumento}"
+                                   itemValue="#{c}"
+                                   placeholder="Cliente"
+                                   forceSelection="true"
+                                   required="true"
+                                   requiredMessage="El campo cliente  es obligatorio"
+                                   emptyMessage="No se encontraron coincidencias"
+                                   >
+                    <f:converter binding="#{clienteConverter}"/>
+
+                  </p:autoComplete>
+                  <p:outputLabel/>
+                  <p:commandButton value="Guardar" 
+                                   actionListener="#{simuladorController.otorgarPrestamo()}"
+                                   oncomplete="PF('dialogOtorgar').hide();"
+                                   update=":frmInformacion:mensajes"/>
+
+                </h:panelGrid>
+              </p:dialog>   
+
+
+
+            </h:form>
+            <h:form id="chart">
+              <!--Dialogo para mostrar el grafico-->
+              <p:dialog id="dlgChart" header="Grafico de amortizacion" widgetVar="dialogChart" modal="true" showEffect="explode" >
+
+                <p:chart type="bar" model="#{simuladorController.barModelFrances}"  responsive="true"/>
+
+              </p:dialog>
+            </h:form>
+
+          </div>
+        </div>
+        <h:outputScript library="js" name="desactivarDomingos.js"/>
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

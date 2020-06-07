@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../plantilla/plantilla.xhtml">
+
+      <ui:define name="content">
+        <h2>#{app['pagina_clientes.titulo']}</h2>
+        <h:form>
+
+          <p:button value="#{app['boton.nuevo']}" icon="pi pi-plus" outcome="/pages/nuevocliente"/>
+
+          <p:dataTable value="#{clienteDataController.lstClientes}" var="c"
+                       rowKey="#{c.id}"
+                       reflow="true">
+            <p:column style="width:16px">
+              <p:rowToggler />
+            </p:column>
+            <p:column headerText="#{app['header.codigo']}">
+              <h:outputText value="#{c.codigo}"/>
+            </p:column>
+            <p:column headerText="#{app['header.apellido']}">
+              <h:outputText value="#{c.personas.apellidoNombre}"/>
+            </p:column>
+            <p:column headerText="#{app['header.dni']}">
+              <h:outputText value="#{c.personas.ndocumento}"/>
+            </p:column>
+            <p:column headerText="#{app['header.nacimiento']}">
+              <h:outputText value="#{c.personas.fnacimiento}">
+                <f:convertDateTime pattern="dd/MM/yyyy"/>
+              </h:outputText>
+            </p:column>
+            <p:column headerText="#{app['header.email']}">
+              <h:outputText value="#{c.personas.email}"/>
+            </p:column>
+            <p:column headerText="#{app['header.telefono']}">
+              <h:outputText value="+#{c.personas.telefono}"/>
+            </p:column>
+            <p:column>
+              <p:splitButton icon="pi pi-list" title="#{app['boton.opciones']}">
+                <p:menuitem value="#{app['boton.actualizar']}"  icon="pi pi-refresh" />
+                <p:menuitem value="#{app['boton.eliminar']}"  icon="pi pi-times" />
+              </p:splitButton>  
+            </p:column>
+            <f:facet name="footer">
+              #{app['footer.totalclientes']}: #{clienteDataController.lstClientes.size()}
+            </f:facet>
+          </p:dataTable>
+
+        </h:form>
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

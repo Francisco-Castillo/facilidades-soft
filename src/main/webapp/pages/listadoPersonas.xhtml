@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+  <body>
+
+    <ui:composition template="./../plantilla/plantilla.xhtml">
+
+      <ui:define name="content">
+        <h2>Listado de Personas</h2>
+        <p:dataTable value="#{personasDataController.lstPersonas}" 
+                     rowKey="#{persona.id}" var="persona" 
+                     paginator="true"
+                     paginatorPosition="top"
+                     rows="5"
+                     selectionMode="single">
+          <p:column style="width: 60px;">
+            <div class="box-image">
+              <div>
+                <p:graphicImage class="profile" cache="false" value="#{personasDataController.image}">
+                  <f:param name="id" value="#{persona.id}" />
+                </p:graphicImage>
+              </div>
+            </div>
+          </p:column>
+          <p:column headerText="Apellido y Nombre" style="text-align: center;">
+            <h:outputText value="#{persona.apellidoNombre}"/>
+          </p:column>
+          <p:column headerText="Fecha de Nacimiento" style="text-align: center;">
+            <h:outputText value="#{persona.fnacimiento}">
+              <f:convertDateTime pattern="dd/MM/yyyy"/>
+            </h:outputText>
+          </p:column>
+          <p:column headerText="Sexo" style="text-align: center;">
+            <h:outputText value="#{persona.sexo eq 0 ? 'F': 'M'}" />
+          </p:column>
+          <p:column headerText="Documento" style="text-align: center;">
+            <h:outputText value="#{persona.ndocumento}"/>
+          </p:column>
+          <p:column headerText="Telefono" style="text-align: center;">
+            <h:outputText value="#{persona.telefono}"/>
+          </p:column>
+          <p:column headerText="Correo">
+            <h:outputText value="#{persona.email}"/>
+          </p:column>
+          <f:facet name="footer">
+            Total de registros encontrados : #{personasDataController.lstPersonas.size()}
+          </f:facet>
+        </p:dataTable>
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

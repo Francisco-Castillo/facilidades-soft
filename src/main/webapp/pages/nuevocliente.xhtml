@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../plantilla/plantilla.xhtml">
+
+      <ui:define name="content">
+        <h2>Nuevo cliente</h2>
+        <div class="ui-g">
+             <div class="ui-g-12 ui-md-12 ui-lg-3">
+             </div>
+
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <h:form id="frmPrincipal">
+              <p:fieldset legend="Cliente" style="margin-bottom: 20px;">
+                <p:panelGrid id="pgCliente" columns="2">
+                  <p:outputLabel value="codigo"/>
+                  <p:inputText value="#{clienteDataController.nuevoCliente.codigo}"/> 
+                </p:panelGrid>
+              </p:fieldset>
+            
+              <p:fieldset legend="Datos personales" style="margin-bottom: 20px;">
+                <p:panelGrid id="pgPersonal" columns="2" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-9" styleClass="ui-panelgrid-blank">
+                  <p:outputLabel value="Apellido" />
+                  <p:inputText  value="#{clienteDataController.nuevaPersona.apellido}" style="width: 100%;"/>
+                  <p:outputLabel value="Nombre" />
+                  <p:inputText value="#{clienteDataController.nuevaPersona.nombre}" style="width: 100%;"/>
+                  <p:outputLabel value="N° Documento" />
+                  <p:inputText value="#{clienteDataController.nuevaPersona.ndocumento}" style="width: 100%;"/>
+                  <p:outputLabel value="F. de Nacimiento" />
+                  <p:calendar value="#{clienteDataController.nuevaPersona.fnacimiento}" locale="es" style="width: 100%;"/>
+                  <p:outputLabel value="Sexo"/>
+                  <p:selectOneMenu value="#{clienteDataController.nuevaPersona.sexo}" converter="javax.faces.Integer">
+                    <f:selectItem noSelectionOption="true" itemLabel="--Seleccionar--" itemValue=""/>
+                    <f:selectItems value="#{clienteDataController.mapSexo}"/>
+                  </p:selectOneMenu>
+                  <p:outputLabel value="Email" />
+                  <p:inputText value="#{clienteDataController.nuevaPersona.email}" style="width: 100%;"/>
+                  <p:outputLabel value="Teléfono" />
+                  <p:inputText value="#{clienteDataController.nuevaPersona.telefono}" style="width: 100%;"/>
+
+                </p:panelGrid>
+              </p:fieldset>
+              
+
+              <p:commandButton value="Guardar" icon="pi pi-save" actionListener="#{clienteDataController.crear()}" />
+              <p:messages closable="true" showDetail="true">
+                <p:autoUpdate/>
+              </p:messages>
+
+            </h:form>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-3">
+             </div>
+
+        </div>
+
+
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>

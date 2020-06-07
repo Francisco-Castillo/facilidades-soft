@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <body>
+
+    <ui:composition template="./../plantilla/plantilla.xhtml">
+
+      <ui:define name="content">
+        
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <h2>Nueva Persona</h2>
+            <h:form  id="frmPrincipal">
+              <p:messages id="messages"/>
+              <p:panelGrid id="pgPersonal" columns="2" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-9" styleClass="ui-panelgrid-blank">
+                <p:outputLabel value="Apellido"/>
+                <p:inputText value="#{personasDataController.nuevaPersona.apellido}"/>
+                <p:outputLabel value="Nombre"/>
+                <p:inputText value="#{personasDataController.nuevaPersona.nombre}"/>
+                <p:outputLabel value="N° de documento"/>
+                <p:inputText value="#{personasDataController.nuevaPersona.ndocumento}"/>
+                <p:outputLabel value="Fecha de nacimiento"/>
+                <p:calendar locale="es" value="#{personasDataController.nuevaPersona.fnacimiento}"/>
+                <p:outputLabel value="Sexo"/>
+                <p:selectOneMenu converter="javax.faces.Integer" 
+                                 value="#{personasDataController.nuevaPersona.sexo}">
+                  <f:selectItem itemLabel="--Seleccionar--" itemValue="" />
+                  <f:selectItem itemLabel="Masculino" itemValue="1" />
+                  <f:selectItem itemLabel="Femenino" itemValue="0" />
+                </p:selectOneMenu>
+                <p:outputLabel value="Telefono"/>
+                <p:inputText value="#{personasDataController.nuevaPersona.telefono}"/>
+                <p:outputLabel value="Email"/>
+                <p:inputText value="#{personasDataController.nuevaPersona.email}"/>
+                <p:commandButton value="Guardar" 
+                                 actionListener="#{personasDataController.registrarPersona()}"
+                                 update=":frmPrincipal:messages"/>
+              </p:panelGrid>
+            </h:form>
+            <!--Formulario para imagen-->
+            <h:form enctype="multipart/form-data">
+              <p:panelGrid id="pgPersonal" columns="2" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3" styleClass="ui-panelgrid-blank">
+                <p:outputLabel value="Imagen"/>
+                <p:fileUpload fileUploadListener="#{personasDataController.handleFileUpload}"
+                              messageTemplate="Seleccione"
+                              mode="advanced" 
+                              update=":frmPrincipal:messages" 
+                              auto="true"
+                              cancelLabel="Cancelar" 
+                              uploadLabel="Subir" 
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              sizeLimit="3000000"
+                              invalidSizeMessage="El archivo es demasiado grande. No debe superar los 3Mb"
+                              invalidFileMessage="Tipo de archivo no soportado. Solo se admiten .gif .png .jpeg"
+                              fileLimitMessage="El archivo es demasiado grande. No debe superar los 3Mb"
+                        
+                              label="Seleccionar"/>
+              </p:panelGrid>
+            </h:form>
+          </div>
+        </div>
+
+      </ui:define>
+
+    </ui:composition>
+
+  </body>
+</html>
