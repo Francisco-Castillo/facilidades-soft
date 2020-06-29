@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+  <body>
+
+    <ui:composition template="./../../plantilla/plantilla.xhtml">
+
+      <ui:define name="content">
+        <div class="ui-g">
+          <div class="ui-lg-6">
+
+          </div>
+          <div class="ui-lg-3">
+            <p:panel header="N° de Factura">
+              <h:outputText value="0001" styleClass="nFactura"/>
+            </p:panel>
+          </div>
+          <div class="ui-lg-3">
+            <p:panel header="Fecha">
+              <h:outputText value="#{cobroController.fechaActual}" styleClass="nFactura">
+                <f:convertDateTime pattern="dd/MM/yyyy"/>
+              </h:outputText>
+            </p:panel>
+          </div>
+
+        </div>
+        <div class="ui-g">
+          <div class="ui-lg-12">
+            <p:commandButton type="button" icon="fa fa-search" value="Buscar cliente" onclick="PF('dlg2').show();"/>
+            <p:panel header="Datos de cliente" >
+              <h:outputText value="35210765 - CASTILLO, CESAR F" styleClass="datosCliente"/>
+            </p:panel>
+          </div>
+
+        </div>
+        <div class="ui-g">
+          <div class="ui-lg-12">
+            <h:form id="frmPrincipal">
+
+              <p:dataTable 
+                id="tblCuotas" value="#{cobroController.prestamoSeleccionado.cuotasCollection}" 
+                var="c"
+                rowKey="#{c.id}"
+                rowStyleClass="#{c.estado eq 1 ? 'abierta2' : c.estado eq 2 ?  'cerrada' : c.estado eq 3 ? 'abierta' : ''}"
+                selection="#{cobroController.cuotasSeleccionadas}"
+                >
+
+                <f:facet name="header">
+                  Cuotas
+                </f:facet>
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="N° Cuota">
+                  <h:outputText value="#{c.nro}"/>
+                </p:column>
+                <p:column headerText="Valor">
+                  <h:outputText value="#{c.valor}">
+                    <f:convertNumber type="currency" currencySymbol="$"/>
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="F. de Vencimiento">
+                  <h:outputText value="#{c.fvencimiento}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                  </h:outputText>
+                </p:column>
+                <p:column headerText="Estado">
+                  <h:outputText value="#{c.estado eq 1 ? 'Impaga' : c.estado eq 2 ? 'Pagada' : c.estado eq 3 ?  'En Mora' : ''}"/>
+                </p:column>
+                <f:facet name="footer">
+                  <p:commandButton process="tblCuotas"  icon="fa fa-search" value="Procesar" update=":frmPagos" 
+                                   actionListener="#{cobroController.totalFacturado()}" oncomplete="PF('dlgPagos').show()" />
+                </f:facet>
+
+              </p:dataTable>
+            </h:form>
+          </div>
+
+
+
+          <p:dialog header="Buscar prestamos por cliente" 
+                    widgetVar="dlg2" modal="true" height="500" width="1200" closeOnEscape="true">
+            <div class="ui-g">
+              <div class="ui-g-12">
+
+                <h:form>
+                  <p:autoComplete  id="txtProvincia" scrollHeight="200" dropdown="true"
+                                   value="#{cobroController.cliente}" 
+                                   completeMethod="#{clienteDataController.findByNameLike}"
+                                   var="pr" 
+                                   itemLabel="#{pr.id.apellido}"
+                                   itemValue="#{pr}"
+                                   placeholder="Teclee para buscar"
+                                   forceSelection="true"
+                                   required="true"
+                                   requiredMessage="El campo provincia  es obligatorio"
+                                   emptyMessage="No se encontraron coincidencias"
+                                   >
+                    <f:converter binding="#{clienteConverter}"/>
+                    <p:ajax event="itemSelect"  listener="#{cobroController.buscarPrestamos}" update=":pgCliente, :frmPrestamos:tblPrestamos"/>
+                  </p:autoComplete>
+                </h:form>
+                <!--Panel cliente-->
+                <p:panel header="Datos del cliente" style="margin-bottom: 5px;">
+                  <h:panelGrid columns="1" id="pgCliente" style="font-size: 15px;font-weight: bold;">
+                    <h:outputText value="#{cobroController.cliente.id.toString()}"/>
+                  </h:panelGrid>
+                </p:panel>
+
+                <h:form id="frmPrestamos">
+                  <!-- Tabla de Prestamos-->
+                  <p:dataTable id="tblPrestamos" value="#{cobroController.lsPrestamos}" 
+                               var="p" paginator="true" 
+                               paginatorPosition="top" 
+                               rowKey="#{p.id}"
+                               rows="4"
+                               selectionMode="single"
+                               selection="#{cobroController.prestamoSeleccionado}"
+                               >
+                    <p:ajax event="rowSelect" listener="#{cobroController.onRowSelect}"  update=":frmPrincipal" oncomplete="PF('dlg2').hide();" />
+                    <f:facet name="header">
+                      Listado de préstamos
+                    </f:facet>
+                    <p:column headerText="Codigo" style="text-align: center;">
+                      <h:outputText value="#{p.id}"/>
+                    </p:column>
+                    <p:column headerText="Monto" style="text-align: center;">
+                      <h:outputText value="#{p.dineroprestado}">
+                        <f:convertNumber type="currency" currencySymbol="$"/>
+                      </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha de Solicitud" style="text-align: center;">
+                      <h:outputText value="#{p.fsolicitud}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                      </h:outputText>
+                    </p:column>
+                    <p:column headerText="Estado" style="text-align: center;">
+                      <p:button value="#{p.estado eq 0 ? 'Cancelado': 'Activo'}"/>
+                    </p:column>
+                    <f:facet name="footer">
+                      Total de registros : #{cobroController.lsPrestamos.size()}
+                    </f:facet>
+                  </p:dataTable>
+                </h:form>
+
+              </div>
+
+
+            </div>
+          </p:dialog>   
+        </div>
+
+        <div class="ui-g">
+          <div class="ui-lg-6">
+
+          </div>
+        </div>
+        <p:dialog modal="true" widgetVar="dlgPagos" header="Total a Pagar">
+          <div class="ui-g">
+            <div class="ui-g-12">
+            </div>
+          </div>
+          <div class="ui-g">
+            <div class="ui-g-12">
+              <h:form id="frmPagos">
+                <h:panelGrid columns="1">
+                  <h:outputText value="#{cobroController.totalAcobrar}" styleClass="totalPagar">
+                    <f:convertNumber type="currency" currencySymbol="$"/>
+                  </h:outputText>
+                  <p:commandButton value="Cobrar"/>
+                </h:panelGrid>
+              </h:form>
+
+
+            </div>
+          </div>
+        </p:dialog>
+      </ui:define>
+    </ui:composition>
+
+  </body>
+</html>

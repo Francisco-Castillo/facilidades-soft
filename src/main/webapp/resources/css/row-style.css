@@ -1,0 +1,43 @@
+/*Pinta las celdas de color*/
+.cerrada{
+  color: #666666 !important;
+  background: #ccff99 !important;
+}
+
+.abierta{
+  color: #666666 !important;
+  background: #ffccff !important;
+}
+
+.sinLeer{
+  font-weight: bold !important;
+}
+
+/*Pinta las columnas de acuerdo al nivel de log*/
+.info {
+  color: #666666 !important;
+  display: block;
+  background-color: #ccff99 !important;
+}
+.warn {
+  color: #666666 !important;
+  display: block;
+  background-color: #ffff99 !important;
+}
+.error {
+  color: #666666 !important;
+  display: block;
+  background-color: #ffccff !important;
+}
+
+/*Estilos para estados de llamados*/
+.cerrado {
+  color: #666666 !important;
+  display: block;
+  background-color: #ffccff !important;
+}
+.abierto {
+  color: #666666 !important;
+  display: block;
+  background-color: #ccff99 !important;
+}

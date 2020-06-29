@@ -223,7 +223,7 @@ public class Personas implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fcastillo.facsoft.Personas[ id=" + id + " ]";
+        return ndocumento + " - " + apellido + ", " + nombre;
     }
 
 }

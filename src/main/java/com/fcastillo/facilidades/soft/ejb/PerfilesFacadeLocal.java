@@ -24,10 +24,12 @@ public interface PerfilesFacadeLocal {
 
     Perfiles find(Object id);
 
+    Perfiles findById(int id);
+
     List<Perfiles> findAll();
 
     List<Perfiles> findRange(int[] range);
 
     int count();
-    
+
 }

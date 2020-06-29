@@ -46,7 +46,7 @@ import org.primefaces.model.UploadedFile;
  * @author fcastillo
  */
 @Named(value = "personasDataController")
-@ViewScoped
+@ApplicationScoped
 public class PersonasDataController implements Serializable {
 
     @Resource(lookup = "jdbc/facsoftdb")

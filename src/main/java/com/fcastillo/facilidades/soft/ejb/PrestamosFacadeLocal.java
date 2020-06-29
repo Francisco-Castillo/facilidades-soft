@@ -29,5 +29,7 @@ public interface PrestamosFacadeLocal {
     List<Prestamos> findRange(int[] range);
 
     int count();
-    
+
+    List<Prestamos> findByIdCliente(int idCliente);
+
 }

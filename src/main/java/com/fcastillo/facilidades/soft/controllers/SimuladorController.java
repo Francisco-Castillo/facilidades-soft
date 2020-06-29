@@ -61,6 +61,7 @@ public class SimuladorController implements Serializable {
     private Clientes cliente = new Clientes();
     List<Cuotas> lstCuotas = new ArrayList<>();
     private BarChartModel barModelFrances = new BarChartModel();
+    private List<Frances> lstFrances;
     //</editor-fold>
 
     ///<editor-fold defaultstate="collpased" desc="get/set">
@@ -79,8 +80,6 @@ public class SimuladorController implements Serializable {
     public void setCliente(Clientes cliente) {
         this.cliente = cliente;
     }
-
-    private List<Frances> lstFrances;
 
     public double getTotalHaberes() {
         return totalHaberes;
@@ -163,8 +162,6 @@ public class SimuladorController implements Serializable {
     }
 
     //</editor-fold>
-    
-   
     public void crearBarModelFrances() {
         barModelFrances = new BarChartModel();
         ChartSeries serieInteres = new ChartSeries();
@@ -286,15 +283,7 @@ public class SimuladorController implements Serializable {
 
     public String procesar() {
         lstFrances = new ArrayList<>();
-
-//        if (totalHaberes == 0 || montoSolicitado == 0) {
-//            Mensajes.error("El total de haberes percibidos y/o monto solicitado no pueden ser 0.");
-//        }
-//        
-//        if (totalHaberes < montoSolicitado) {
-//            Mensajes.error("El total de haberes no puede ser menor que el monto solicitado");
-//            return "";
-//        }
+        
         double totalAmortizado = 0;
 
         for (int periodo = 0; periodo < plazo; periodo++) {
@@ -361,5 +350,18 @@ public class SimuladorController implements Serializable {
         seguroVida = 0;
         montoSolicitado = 0;
         PrimeFaces.current().executeScript("PF('calendario').setDate(null)");
+    }
+
+    public String validar(double haberes, double dineroSolicitado) {
+        if (haberes == 0 || dineroSolicitado == 0) {
+            Mensajes.error("El total de haberes percibidos y/o monto solicitado no pueden ser 0.");
+            return "";
+        }
+
+        if (haberes < dineroSolicitado) {
+            Mensajes.error("El total de haberes no puede ser menor que el monto solicitado");
+            return "";
+        }
+        return null;
     }
 }

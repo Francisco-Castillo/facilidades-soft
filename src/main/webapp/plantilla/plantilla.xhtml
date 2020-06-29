@@ -12,6 +12,7 @@
     <h:outputStylesheet name="css/default.css"/>
     <h:outputStylesheet name="css/cssLayout.css"/>
     <h:outputStylesheet name="css/perfiles.css"/>
+    <h:outputStylesheet name="css/row-style.css"/>
 
     <f:loadBundle basename="propiedades.aplicacion" var="app"/> 
     <title>#{app['aplicacion.titulo']}</title>
@@ -38,6 +39,12 @@
                 <p:menuitem value="File" url="#" />
               </p:submenu>
             </p:submenu>
+
+            <p:submenu label="Pagos" icon="pi pi-dollar">
+              <p:menuitem value="Registrar" outcome="/pages/pagos/registrar"  icon="pi pi-info"/>
+            </p:submenu>
+
+
 
             <p:submenu label="Reportes" icon="fa fa-file-text-o">
               <p:submenu label="Clientes" icon="fa fa-users">
