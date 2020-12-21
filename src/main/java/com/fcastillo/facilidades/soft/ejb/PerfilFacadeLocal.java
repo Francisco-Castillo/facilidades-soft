@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.ejb;
 
-import com.fcastillo.facilidades.soft.Pagos;
+import com.fcastillo.facilidades.soft.Perfil;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,20 +14,22 @@ import javax.ejb.Local;
  * @author fcastillo
  */
 @Local
-public interface PagosFacadeLocal {
+public interface PerfilFacadeLocal {
 
-    void create(Pagos pagos);
+    void create(Perfil perfil);
 
-    void edit(Pagos pagos);
+    void edit(Perfil perfil);
 
-    void remove(Pagos pagos);
+    void remove(Perfil perfil);
 
-    Pagos find(Object id);
+    Perfil find(Object id);
 
-    List<Pagos> findAll();
+    Perfil findById(int id);
 
-    List<Pagos> findRange(int[] range);
+    List<Perfil> findAll();
+
+    List<Perfil> findRange(int[] range);
 
     int count();
-    
+
 }

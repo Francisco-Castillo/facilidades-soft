@@ -23,9 +23,9 @@
                 <p:outputLabel value="Nombre"/>
                 <p:inputText value="#{personasDataController.nuevaPersona.nombre}"/>
                 <p:outputLabel value="N° de documento"/>
-                <p:inputText value="#{personasDataController.nuevaPersona.ndocumento}"/>
+                <p:inputText value="#{personasDataController.nuevaPersona.numeroDocumento}"/>
                 <p:outputLabel value="Fecha de nacimiento"/>
-                <p:calendar locale="es" value="#{personasDataController.nuevaPersona.fnacimiento}"/>
+                <p:calendar locale="es" value="#{personasDataController.nuevaPersona.fechaNacimiento}"/>
                 <p:outputLabel value="Sexo"/>
                 <p:selectOneMenu converter="javax.faces.Integer" 
                                  value="#{personasDataController.nuevaPersona.sexo}">

@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.ejb;
 
-import com.fcastillo.facilidades.soft.Usuarios;
+import com.fcastillo.facilidades.soft.Persona;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.Query;
  * @author fcastillo
  */
 @Stateless
-public class UsuariosFacade extends AbstractFacade<Usuarios> implements UsuariosFacadeLocal {
+public class PersonaFacade extends AbstractFacade<Persona> implements PersonaFacadeLocal {
 
     @PersistenceContext(unitName = "com.fcastillo_facsoft_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -26,23 +26,21 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         return em;
     }
 
-    public UsuariosFacade() {
-        super(Usuarios.class);
+    public PersonaFacade() {
+        super(Persona.class);
     }
 
     @Override
-    public Usuarios findByUsername(String username) throws Exception {
-        Usuarios usuario = null;
-        String consulta;
+    public Persona findById(int id) {
+        Persona persona = null;
+        String consulta = "FROM Persona p WHERE p.id=?1";
         try {
-            consulta = "FROM Usuarios u WHERE u.username=?1";
-            Query q = em.createQuery(consulta).setParameter(1, username);
-            usuario = (Usuarios) q.getSingleResult();
+            Query q = em.createQuery(consulta);
+            q.setParameter(1, id);
+            persona = (Persona) q.getSingleResult();
         } catch (Exception e) {
-            throw new Exception("Ud. no se encuentra registrado como usuario");
         }
-
-        return usuario;
+        return persona;
     }
 
 }

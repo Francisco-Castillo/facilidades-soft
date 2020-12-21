@@ -5,8 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.controllers;
 
-import com.fcastillo.facilidades.soft.Personas;
-import com.fcastillo.facilidades.soft.ejb.PersonasFacadeLocal;
+import com.fcastillo.facilidades.soft.Persona;
 import com.fcastillo.facilidades.soft.utilidades.Mensajes;
 import com.fcastillo.facilidades.soft.utilidades.GeneradorReportes;
 import java.io.BufferedInputStream;
@@ -40,6 +39,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import com.fcastillo.facilidades.soft.ejb.PersonaFacadeLocal;
 
 /**
  *
@@ -53,25 +53,25 @@ public class PersonasDataController implements Serializable {
     DataSource ds;
 
     @EJB
-    PersonasFacadeLocal personasEJB;
-    private List<Personas> lstPersonas;
-    private Personas nuevaPersona = new Personas();
+    PersonaFacadeLocal personasEJB;
+    private List<Persona> lstPersonas;
+    private Persona nuevaPersona = new Persona();
 
     Logger logger = LogManager.getLogger(PersonasDataController.class);
 
-    public Personas getNuevaPersona() {
+    public Persona getNuevaPersona() {
         return nuevaPersona;
     }
 
-    public void setNuevaPersona(Personas nuevaPersona) {
+    public void setNuevaPersona(Persona nuevaPersona) {
         this.nuevaPersona = nuevaPersona;
     }
 
-    public List<Personas> getLstPersonas() {
+    public List<Persona> getLstPersonas() {
         return lstPersonas;
     }
 
-    public void setLstPersonas(List<Personas> lstPersonas) {
+    public void setLstPersonas(List<Persona> lstPersonas) {
         this.lstPersonas = lstPersonas;
     }
 
@@ -101,7 +101,7 @@ public class PersonasDataController implements Serializable {
 
                 int idPersona = Integer.parseInt(personaId);
 
-                Personas persona = personasEJB.findById(idPersona);
+                Persona persona = personasEJB.findById(idPersona);
                 if (persona.getImagen().isEmpty() || persona.getImagen().equals("") || persona.getImagen() == null) {
                     out = getFile(path, noimage);
                 } else {
@@ -186,7 +186,7 @@ public class PersonasDataController implements Serializable {
 
     private void actualizarImagen(String imagen) {
         try {
-            Personas persona = personasEJB.findById(nuevaPersona.getId());
+            Persona persona = personasEJB.findById(nuevaPersona.getId());
             persona.setImagen(imagen);
             personasEJB.edit(persona);
         } catch (Exception e) {

@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.ejb;
 
-import com.fcastillo.facilidades.soft.Clientes;
+import com.fcastillo.facilidades.soft.Cliente;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * @author fcastillo
  */
 @Stateless
-public class ClientesFacade extends AbstractFacade<Clientes> implements ClientesFacadeLocal {
+public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFacadeLocal {
 
     @PersistenceContext(unitName = "com.fcastillo_facsoft_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -27,26 +27,26 @@ public class ClientesFacade extends AbstractFacade<Clientes> implements Clientes
         return em;
     }
 
-    public ClientesFacade() {
-        super(Clientes.class);
+    public ClienteFacade() {
+        super(Cliente.class);
     }
 
     @Override
-    public List<Clientes> findByNameLike(String nombre) {
-        Query query = em.createQuery("FROM Clientes c WHERE CONCAT (lower(c.id.nombre),'',lower(c.id.apellido)) like ?1");
+    public List<Cliente> findByNameLike(String nombre) {
+        Query query = em.createQuery("FROM Cliente c WHERE CONCAT (lower(c.id.nombre),'',lower(c.id.apellido)) like ?1");
         nombre = "%" + nombre.trim() + "%";
         return query.setParameter(1, nombre).getResultList();
     }
 
     @Override
-    public Clientes findById(int id) {
+    public Cliente findById(int id) {
         String consulta;
-        Clientes cliente = null;
+        Cliente cliente = null;
         try {
-            consulta = "FROM Clientes c WHERE c.id.id=?1";
+            consulta = "FROM Cliente c WHERE c.id.id=?1";
             Query q = em.createQuery(consulta);
             q.setParameter(1, id);
-            cliente = (Clientes) q.getSingleResult();
+            cliente = (Cliente) q.getSingleResult();
         } catch (Exception e) {
             throw e;
         }

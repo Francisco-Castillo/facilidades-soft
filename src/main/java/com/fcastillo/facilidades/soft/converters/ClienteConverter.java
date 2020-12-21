@@ -5,9 +5,8 @@
  */
 package com.fcastillo.facilidades.soft.converters;
 
-import com.fcastillo.facilidades.soft.Clientes;
-import com.fcastillo.facilidades.soft.Personas;
-import com.fcastillo.facilidades.soft.ejb.ClientesFacadeLocal;
+import com.fcastillo.facilidades.soft.Cliente;
+import com.fcastillo.facilidades.soft.Persona;
 import com.fcastillo.facilidades.soft.utilidades.Mensajes;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +14,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
+import com.fcastillo.facilidades.soft.ejb.ClienteFacadeLocal;
 
 /**
  *
@@ -25,14 +25,14 @@ import javax.inject.Named;
 public class ClienteConverter implements Converter<Object> {
     
     @EJB
-    private ClientesFacadeLocal clienteEJB;
+    private ClienteFacadeLocal clienteEJB;
     
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-        Clientes cliente = new Clientes();
+        Cliente cliente = new Cliente();
         try {
             if (null != string) {
-                Personas p = new Personas();
+                Persona p = new Persona();
                 p.setId(Integer.parseInt(string));
                 cliente.setId(p);
                 cliente = clienteEJB.findById(cliente.getId().getId());
@@ -49,8 +49,8 @@ public class ClienteConverter implements Converter<Object> {
     public String getAsString(FacesContext fc, UIComponent uic, Object t) {
         String p = "";
         try {
-            if (t instanceof Clientes) {
-                Clientes cliente = (Clientes) t;
+            if (t instanceof Cliente) {
+                Cliente cliente = (Cliente) t;
                 p = String.valueOf(cliente.getId().getId());
             } else if (t instanceof String) {
                 p = (String) t;

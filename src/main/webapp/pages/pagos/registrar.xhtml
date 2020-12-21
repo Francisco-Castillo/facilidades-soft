@@ -44,7 +44,7 @@
             <h:form id="frmPrincipal">
 
               <p:dataTable 
-                id="tblCuotas" value="#{cobroController.prestamoSeleccionado.cuotasCollection}" 
+                id="tblCuotas" value="#{cobroController.prestamoSeleccionado.cuotaCollection}" 
                 var="c"
                 rowKey="#{c.id}"
                 rowStyleClass="#{c.estado eq 1 ? 'abierta2' : c.estado eq 2 ?  'cerrada' : c.estado eq 3 ? 'abierta' : ''}"
@@ -129,12 +129,12 @@
                       <h:outputText value="#{p.id}"/>
                     </p:column>
                     <p:column headerText="Monto" style="text-align: center;">
-                      <h:outputText value="#{p.dineroprestado}">
+                      <h:outputText value="#{p.dineroPrestado}">
                         <f:convertNumber type="currency" currencySymbol="$"/>
                       </h:outputText>
                     </p:column>
                     <p:column headerText="Fecha de Solicitud" style="text-align: center;">
-                      <h:outputText value="#{p.fsolicitud}">
+                      <h:outputText value="#{p.fechaSolicitud}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                       </h:outputText>
                     </p:column>

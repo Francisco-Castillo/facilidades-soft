@@ -18,6 +18,12 @@
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
+    <repository>
+      <url>http://repository.primefaces.org/</url>
+      <id>PrimeFaces-maven-lib</id>
+      <layout>default</layout>
+      <name>Repository for library PrimeFaces-maven-lib</name>
+    </repository>
   </repositories>
   
   <dependencies>
@@ -35,15 +41,23 @@
     </dependency>
     <!--Utilidades cefrancastillo-->
     <dependency>
-      <groupId>com.github.cefranc</groupId>
+      <groupId>com.github.Francisco-Castillo</groupId>
       <artifactId>utilidades</artifactId>
-      <version>v0.4</version>
+      <version>v0.14</version>
     </dependency>
+    
     <dependency>
       <groupId>org.primefaces</groupId>
       <artifactId>primefaces</artifactId>
       <version>7.0</version>
     </dependency>
+    
+    <dependency>
+      <groupId>org.primefaces.themes</groupId>
+      <artifactId>all-themes</artifactId>
+      <version>1.0.10</version>
+    </dependency>
+    
     <dependency>
       <groupId>org.eclipse.persistence</groupId>
       <artifactId>org.eclipse.persistence.core</artifactId>
@@ -88,12 +102,7 @@
     </dependency>
     
 
-    <dependency>
-      <groupId>org.primefaces.themes</groupId>
-      <artifactId>all-themes</artifactId>
-      <version>1.0.10</version>
-    </dependency>
-    
+
     <!-- Jakarta EE-->
     <dependency>
       <groupId>jakarta.platform</groupId>
@@ -106,6 +115,7 @@
 
   <build>
     <plugins>
+      <!--PLUGIN PROPERTIES-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>properties-maven-plugin</artifactId>

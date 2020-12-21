@@ -5,8 +5,8 @@
  */
 package com.fcastillo.facilidades.soft.converters;
 
-import com.fcastillo.facilidades.soft.Perfiles;
-import com.fcastillo.facilidades.soft.ejb.PerfilesFacadeLocal;
+import com.fcastillo.facilidades.soft.Perfil;
+import com.fcastillo.facilidades.soft.ejb.PerfilFacadeLocal;
 import com.fcastillo.facilidades.soft.utilidades.Mensajes;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -24,11 +24,11 @@ import javax.inject.Named;
 public class PerfilConverter implements Converter<Object> {
 
     @EJB
-    PerfilesFacadeLocal perfilEJB;
+    PerfilFacadeLocal perfilEJB;
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-        Perfiles perfil = new Perfiles();
+        Perfil perfil = new Perfil();
         try {
             if (null != string) {
                 perfil.setId(Integer.parseInt(string));
@@ -45,8 +45,8 @@ public class PerfilConverter implements Converter<Object> {
     public String getAsString(FacesContext fc, UIComponent uic, Object t) {
            String p = "";
         try {
-            if (t instanceof Perfiles) {
-                Perfiles perfil = (Perfiles) t;
+            if (t instanceof Perfil) {
+                Perfil perfil = (Perfil) t;
                 p = String.valueOf(perfil.getId());
             } else if (t instanceof String) {
                 p = (String) t;

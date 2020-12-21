@@ -31,7 +31,7 @@
             <h:outputText value="#{persona.apellidoNombre}"/>
           </p:column>
           <p:column headerText="Fecha de Nacimiento" style="text-align: center;">
-            <h:outputText value="#{persona.fnacimiento}">
+            <h:outputText value="#{persona.fechaNacimiento}">
               <f:convertDateTime pattern="dd/MM/yyyy"/>
             </h:outputText>
           </p:column>
@@ -39,7 +39,7 @@
             <h:outputText value="#{persona.sexo eq 0 ? 'F': 'M'}" />
           </p:column>
           <p:column headerText="Documento" style="text-align: center;">
-            <h:outputText value="#{persona.ndocumento}"/>
+            <h:outputText value="#{persona.numeroDocumento}"/>
           </p:column>
           <p:column headerText="Telefono" style="text-align: center;">
             <h:outputText value="#{persona.telefono}"/>

@@ -1,8 +1,7 @@
 package com.fcastillo.facilidades.soft.seguridad;
 
-import com.fcastillo.facilidades.soft.Credenciales;
-import com.fcastillo.facilidades.soft.Usuarios;
-import com.fcastillo.facilidades.soft.ejb.UsuariosFacadeLocal;
+import com.fcastillo.facilidades.soft.Credencial;
+import com.fcastillo.facilidades.soft.Usuario;
 import com.fcastillo.facilidades.soft.utilidades.Mensajes;
 import com.fcastillo.utilidades.Password;
 import javax.inject.Named;
@@ -14,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import com.fcastillo.facilidades.soft.ejb.UsuarioFacadeLocal;
 
 /**
  *
@@ -24,23 +24,23 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController implements Serializable {
 
     @EJB
-    UsuariosFacadeLocal usuarioEJB;
-    private Credenciales credenciales = new Credenciales();
-    private Usuarios usuarioLogueado;
+    UsuarioFacadeLocal usuarioEJB;
+    private Credencial credenciales = new Credencial();
+    private Usuario usuarioLogueado;
 
-    public Credenciales getCredenciales() {
+    public Credencial getCredenciales() {
         return credenciales;
     }
 
-    public void setCredenciales(Credenciales credenciales) {
+    public void setCredenciales(Credencial credenciales) {
         this.credenciales = credenciales;
     }
 
-    public Usuarios getUsuarioLogueado() {
+    public Usuario getUsuarioLogueado() {
         return usuarioLogueado;
     }
 
-    public void setUsuarioLogueado(Usuarios usuarioLogueado) {
+    public void setUsuarioLogueado(Usuario usuarioLogueado) {
         this.usuarioLogueado = usuarioLogueado;
     }
 
@@ -65,7 +65,7 @@ public class LoginController implements Serializable {
             return 0;
         }
 
-        Usuarios usuario = null;
+        Usuario usuario = null;
 
         try {
             usuario = usuarioEJB.findByUsername(credenciales.getNombreUsuario());

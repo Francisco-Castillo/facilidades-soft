@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.ejb;
 
-import com.fcastillo.facilidades.soft.Personas;
+import com.fcastillo.facilidades.soft.Perfil;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import javax.persistence.Query;
  * @author fcastillo
  */
 @Stateless
-public class PersonasFacade extends AbstractFacade<Personas> implements PersonasFacadeLocal {
+public class PerfilFacade extends AbstractFacade<Perfil> implements PerfilFacadeLocal {
 
     @PersistenceContext(unitName = "com.fcastillo_facsoft_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -26,21 +26,15 @@ public class PersonasFacade extends AbstractFacade<Personas> implements Personas
         return em;
     }
 
-    public PersonasFacade() {
-        super(Personas.class);
+    public PerfilFacade() {
+        super(Perfil.class);
     }
 
     @Override
-    public Personas findById(int id) {
-        Personas persona = null;
-        String consulta = "FROM Personas p WHERE p.id=?1";
-        try {
-            Query q = em.createQuery(consulta);
-            q.setParameter(1, id);
-            persona = (Personas) q.getSingleResult();
-        } catch (Exception e) {
-        }
-        return persona;
+    public Perfil findById(int id) {
+        String consulta = "FROM Perfil p WHERE p.id=?1";
+        Query query = em.createQuery(consulta).setParameter(1, id);
+        return (Perfil) query.getSingleResult();
     }
 
 }

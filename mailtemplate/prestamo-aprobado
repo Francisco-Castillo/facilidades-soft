@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <table style="max-width: 600px;padding: 10px;margin: 0 auto;border-collapse: collapse;">
+      <tr>
+        <td style="padding: 0">
+          <img src="https://i.postimg.cc/gJnvVZ0F/mail.png" style="padding: 0;display: block;" width="100%"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="margin: 4% 10% 2%;text-align: justify; font-family: sans-serif;">
+            <h2 style="margin: 0 0 7px;text-align:center">Felicitaciones{nombreusuario}</h2>
+            <p style="margin: 2px; font-size: 13px;">
+              <br />
+              Su solicitud de préstamo fue aprobada.
+              <br /><br/>
+              Su dinero estará disponible en su cuenta dentro de las próximas 24 horas.<br/><br/>
+              Para más información, por favor acceda al sistema haciendo clic en el botón "Iniciar Sesión".<br /><br />
+              <a href="host" style="background-color: #035eac;border: none;color: white;padding: 15px 32px;text-align: center; text-decoration: none;display: inline-block; font-size: 14px;margin: 4px 2px;cursor: pointer;" title="Ingresar">
+                Iniciar Sesión
+              </a>
+              <br /><br />
+            <p style="font-size: 12px;text-align: center;margin: 30px 0 0;">
+              Facsoft
+            </p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

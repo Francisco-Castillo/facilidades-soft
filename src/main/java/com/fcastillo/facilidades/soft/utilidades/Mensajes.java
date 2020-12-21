@@ -9,7 +9,8 @@ import javax.faces.context.FacesContext;
  *
  * @author fcastillo
  */
-@Named
+
+@Named(value = "mensajesCDI")
 @RequestScoped
 public class Mensajes {
 

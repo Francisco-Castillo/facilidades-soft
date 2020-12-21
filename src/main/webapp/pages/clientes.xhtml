@@ -26,21 +26,21 @@
               <h:outputText value="#{c.codigo}"/>
             </p:column>
             <p:column headerText="#{app['header.apellido']}">
-              <h:outputText value="#{c.personas.apellidoNombre}"/>
+              <h:outputText value="#{c.persona.apellidoNombre}"/>
             </p:column>
             <p:column headerText="#{app['header.dni']}">
-              <h:outputText value="#{c.personas.ndocumento}"/>
+              <h:outputText value="#{c.persona.numeroDocumento}"/>
             </p:column>
             <p:column headerText="#{app['header.nacimiento']}">
-              <h:outputText value="#{c.personas.fnacimiento}">
+              <h:outputText value="#{c.persona.fechaNacimiento}">
                 <f:convertDateTime pattern="dd/MM/yyyy"/>
               </h:outputText>
             </p:column>
             <p:column headerText="#{app['header.email']}">
-              <h:outputText value="#{c.personas.email}"/>
+              <h:outputText value="#{c.persona.email}"/>
             </p:column>
             <p:column headerText="#{app['header.telefono']}">
-              <h:outputText value="+#{c.personas.telefono}"/>
+              <h:outputText value="+#{c.persona.telefono}"/>
             </p:column>
             <p:column>
               <p:splitButton icon="pi pi-list" title="#{app['boton.opciones']}">

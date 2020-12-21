@@ -47,6 +47,9 @@
 
 
             <p:submenu label="Reportes" icon="fa fa-file-text-o">
+              <p:submenu label="Personas" icon="fa fa-users">
+                    <p:menuitem value="Listados" action="#{personasDataController.generarReporteListadoPersonas()}" icon="fa fa-file-text-o" ajax="false" immediate="true"/>
+              </p:submenu>
               <p:submenu label="Clientes" icon="fa fa-users">
                 <p:menuitem value="Listados" action="#{personasDataController.generarReporteListadoPersonas()}" icon="fa fa-file-text-o" ajax="false" immediate="true"/>
 
@@ -56,7 +59,7 @@
               </p:submenu>
             </p:submenu>
             <f:facet name="options">
-              <p:splitButton id="basic" value="#{loginController.usuarioLogueado.id.apellidoNombre}" action="#{buttonView.save}" update="messages">
+              <p:splitButton id="basic" value="#{loginController.usuarioLogueado.id.apellidoNombre}"  update="messages">
                 <p:menuitem value="Cerrar sesión" icon="pi pi-home" 
                             action="#{loginController.cerrarSesion()}"/>
               </p:splitButton>  

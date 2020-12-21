@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.ejb;
 
-import com.fcastillo.facilidades.soft.Personas;
+import com.fcastillo.facilidades.soft.Cuota;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,22 +14,20 @@ import javax.ejb.Local;
  * @author fcastillo
  */
 @Local
-public interface PersonasFacadeLocal {
+public interface CuotaFacadeLocal {
 
-    void create(Personas personas);
+    void create(Cuota cuota);
 
-    void edit(Personas personas);
+    void edit(Cuota cuota);
 
-    void remove(Personas personas);
+    void remove(Cuota cuota);
 
-    Personas find(Object id);
+    Cuota find(Object id);
 
-    Personas findById(int id);
+    List<Cuota> findAll();
 
-    List<Personas> findAll();
-
-    List<Personas> findRange(int[] range);
+    List<Cuota> findRange(int[] range);
 
     int count();
-
+    
 }

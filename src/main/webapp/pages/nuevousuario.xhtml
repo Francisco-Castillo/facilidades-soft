@@ -25,9 +25,9 @@
                   <p:outputLabel value="Nombre: " />
                   <p:inputText value="#{usuarioDataController.nuevaPersona.nombre}" style="width: 100%;"/>
                   <p:outputLabel value="N° Documento: " />
-                  <p:inputText value="#{usuarioDataController.nuevaPersona.ndocumento}" style="width: 100%;"/>
+                  <p:inputText value="#{usuarioDataController.nuevaPersona.numeroDocumento}" style="width: 100%;"/>
                   <p:outputLabel value="F. de Nacimiento: " />
-                  <p:calendar value="#{usuarioDataController.nuevaPersona.fnacimiento}" locale="es" style="width: 100%;"/>
+                  <p:calendar value="#{usuarioDataController.nuevaPersona.fechaNacimiento}" locale="es" style="width: 100%;"/>
                   <p:outputLabel value="Sexo: "/>
                   <p:selectOneMenu value="#{usuarioDataController.nuevaPersona.sexo}" converter="javax.faces.Integer">
                     <f:selectItem noSelectionOption="true" itemLabel="--Seleccionar--" itemValue=""/>

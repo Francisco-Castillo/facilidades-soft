@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.utilidades;
 
-import com.fcastillo.facilidades.soft.Usuarios;
+import com.fcastillo.facilidades.soft.Usuario;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -28,7 +28,7 @@ public class Utilidades {
         return "";
     }
 
-    public static String validarUsuario(Usuarios u) {
+    public static String validarUsuario(Usuario u) {
         if (u == null) {
             Mensajes.error("Ud. no se encuentra registrado como usuario.");
         }

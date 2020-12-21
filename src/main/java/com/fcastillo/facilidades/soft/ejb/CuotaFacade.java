@@ -5,7 +5,7 @@
  */
 package com.fcastillo.facilidades.soft.ejb;
 
-import com.fcastillo.facilidades.soft.Cuotas;
+import com.fcastillo.facilidades.soft.Cuota;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author fcastillo
  */
 @Stateless
-public class CuotasFacade extends AbstractFacade<Cuotas> implements CuotasFacadeLocal {
+public class CuotaFacade extends AbstractFacade<Cuota> implements CuotaFacadeLocal {
 
     @PersistenceContext(unitName = "com.fcastillo_facsoft_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class CuotasFacade extends AbstractFacade<Cuotas> implements CuotasFacade
         return em;
     }
 
-    public CuotasFacade() {
-        super(Cuotas.class);
+    public CuotaFacade() {
+        super(Cuota.class);
     }
     
 }

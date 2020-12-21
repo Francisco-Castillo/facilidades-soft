@@ -5,11 +5,9 @@
  */
 package com.fcastillo.facilidades.soft.controllers;
 
-import com.fcastillo.facilidades.soft.Clientes;
-import com.fcastillo.facilidades.soft.Cuotas;
-import com.fcastillo.facilidades.soft.Prestamos;
-import com.fcastillo.facilidades.soft.ejb.ClientesFacadeLocal;
-import com.fcastillo.facilidades.soft.ejb.PrestamosFacadeLocal;
+import com.fcastillo.facilidades.soft.Cliente;
+import com.fcastillo.facilidades.soft.Cuota;
+import com.fcastillo.facilidades.soft.Prestamo;
 import com.fcastillo.facilidades.soft.utilidades.Mensajes;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,6 +18,8 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
+import com.fcastillo.facilidades.soft.ejb.PrestamoFacadeLocal;
+import com.fcastillo.facilidades.soft.ejb.ClienteFacadeLocal;
 
 /**
  *
@@ -30,55 +30,55 @@ import org.primefaces.event.SelectEvent;
 public class CobroController implements Serializable {
 
     @EJB
-    ClientesFacadeLocal clienteEJB;
+    ClienteFacadeLocal clienteEJB;
     @EJB
-    PrestamosFacadeLocal prestamosEJB;
+    PrestamoFacadeLocal prestamosEJB;
 
-    private List<Clientes> lstClientes = new ArrayList<>();
-    private Clientes cliente = new Clientes();
-    private List<Prestamos> lsPrestamos = new ArrayList<>();
-    private List<Cuotas> cuotasSeleccionadas = new ArrayList<>();
-    private Prestamos prestamoSeleccionado = new Prestamos();
+    private List<Cliente> lstClientes = new ArrayList<>();
+    private Cliente cliente = new Cliente();
+    private List<Prestamo> lsPrestamos = new ArrayList<>();
+    private List<Cuota> cuotasSeleccionadas = new ArrayList<>();
+    private Prestamo prestamoSeleccionado = new Prestamo();
     private Date fechaActual = new Date();
     private BigDecimal totalAcobrar;
 
-    public List<Clientes> getLstClientes() {
+    public List<Cliente> getLstClientes() {
         return lstClientes;
     }
 
-    public void setLstClientes(List<Clientes> lstClientes) {
+    public void setLstClientes(List<Cliente> lstClientes) {
         this.lstClientes = lstClientes;
     }
 
-    public Clientes getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Clientes cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public List<Prestamos> getLsPrestamos() {
+    public List<Prestamo> getLsPrestamos() {
         return lsPrestamos;
     }
 
-    public void setLsPrestamos(List<Prestamos> lsPrestamos) {
+    public void setLsPrestamos(List<Prestamo> lsPrestamos) {
         this.lsPrestamos = lsPrestamos;
     }
 
-    public Prestamos getPrestamoSeleccionado() {
+    public Prestamo getPrestamoSeleccionado() {
         return prestamoSeleccionado;
     }
 
-    public void setPrestamoSeleccionado(Prestamos prestamoSeleccionado) {
+    public void setPrestamoSeleccionado(Prestamo prestamoSeleccionado) {
         this.prestamoSeleccionado = prestamoSeleccionado;
     }
 
-    public List<Cuotas> getCuotasSeleccionadas() {
+    public List<Cuota> getCuotasSeleccionadas() {
         return cuotasSeleccionadas;
     }
 
-    public void setCuotasSeleccionadas(List<Cuotas> cuotasSeleccionadas) {
+    public void setCuotasSeleccionadas(List<Cuota> cuotasSeleccionadas) {
         this.cuotasSeleccionadas = cuotasSeleccionadas;
     }
 
@@ -98,8 +98,8 @@ public class CobroController implements Serializable {
         this.totalAcobrar = totalAcobrar;
     }
 
-    public List<Clientes> findByNameLike(String nombre) {
-        List<Clientes> sugerencias = new ArrayList<>();
+    public List<Cliente> findByNameLike(String nombre) {
+        List<Cliente> sugerencias = new ArrayList<>();
         try {
             nombre = nombre.trim();
             lstClientes = clienteEJB.findByNameLike(nombre.toLowerCase());
@@ -112,7 +112,7 @@ public class CobroController implements Serializable {
         return sugerencias;
     }
 
-    public List<Prestamos> buscarPrestamos() {
+    public List<Prestamo> buscarPrestamos() {
         return lsPrestamos = prestamosEJB.findByIdCliente(cliente.getId().getId());
     }
 
@@ -121,7 +121,7 @@ public class CobroController implements Serializable {
      * @param event
      */
     public void onRowSelect(SelectEvent event) {
-        prestamoSeleccionado = (Prestamos) event.getObject();
+        prestamoSeleccionado = (Prestamo) event.getObject();
     }
 
     public void totalFacturado() {
@@ -134,12 +134,12 @@ public class CobroController implements Serializable {
 
     }
 
-    private double calculaRecargo(Cuotas cuota) {
+    private double calculaRecargo(Cuota cuota) {
         int dias;
         double valorDeRecargo = 0;
         
         if (cuota.getEstado() != 1) {
-            dias = (int) ((this.fechaActual.getTime() - cuota.getFvencimiento().getTime()) / 86400000);
+            dias = (int) ((this.fechaActual.getTime() - cuota.getFechaVencimiento().getTime()) / 86400000);
             valorDeRecargo = (((cuota.getValor().doubleValue()) * 0.01) * dias);
         }
         

@@ -9,7 +9,7 @@ package com.fcastillo.facilidades.soft;
  *
  * @author fcastillo
  */
-public class Credenciales {
+public class Credencial {
 
     private String nombreUsuario;
     private String password;
